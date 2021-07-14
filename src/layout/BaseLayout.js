@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
-import { renderRoutes } from 'react-router-config'
+import renderRoutes from '@/router/renderRoutes'
 import s from './styles/index.module.scss'
 
 /**
