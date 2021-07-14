@@ -1,25 +1,26 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended" // 如果同时使用了eslint和prettier发生冲突了，会关闭掉与prettier有冲突的规则，也就是使用prettier认为对的规则
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended', // 如果同时使用了eslint和prettier发生冲突了，会关闭掉与prettier有冲突的规则，也就是使用prettier认为对的规则
   ],
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 12,
-    sourceType: "module"
+    sourceType: 'module',
   },
   plugins: [
-    "react",
-    "prettier" // eslint 会使用prettier的规则对代码格式化
+    'react',
+    'prettier', // eslint 会使用prettier的规则对代码格式化
   ],
   rules: {
-    "prettier/prettier": 2 // 这项配置 对于不符合prettier规范的写法，eslint会提示报错
-  }
-};
+    'prettier/prettier': 2, // 这项配置 对于不符合prettier规范的写法，eslint会提示报错
+    'react/prop-types': 0, //防止在react组件定义中缺少props验证
+  },
+}

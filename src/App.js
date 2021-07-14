@@ -1,10 +1,15 @@
 // import { Provider } from 'react-redux'
-// import { BrowserRouter } from 'react-router-dom';
-// import store from './store'
-// import Routers from './routers'
+import { BrowserRouter } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
+import router from './router'
 import React from 'react'
+
 function App() {
-  return <div>xxx</div>
+  return (
+    <div>
+      <BrowserRouter>{renderRoutes(router)}</BrowserRouter>
+    </div>
+  )
 }
 
 export default App
