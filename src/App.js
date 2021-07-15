@@ -1,14 +1,15 @@
-// import { Provider } from 'react-redux'
+import React from 'react'
+import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import renderRoutes from '@/router/renderRoutes'
 import routes from '@/router/routes'
-import React from 'react'
+import store from '@/store'
 
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
-    </div>
+    </Provider>
   )
 }
 

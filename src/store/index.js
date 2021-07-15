@@ -1,8 +1,12 @@
 /**
- * Time: 2021/6/22.
- * Author: Yang PengFei
+ * 使用rematch简化redux使用
  */
-import configureStore from './configureStore'
-const store = configureStore()
+import { init } from '@rematch/core'
+import models from './loader'
 
+const configStore = () =>
+  init({
+    models,
+  })
+const store = configStore()
 export default store

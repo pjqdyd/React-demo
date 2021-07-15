@@ -10,19 +10,19 @@ import s from './styles/index.module.scss'
 class BaseLayout extends PureComponent {
   render() {
     return (
-      <div>
+      <div className={s.layout}>
         <nav className={s.nav}>
           <Link className={s.link} to="/home">
             首页
           </Link>
+          <Link className={s.link} to="/user">
+            用户
+          </Link>
           <Link className={s.link} to="/login">
             登录
           </Link>
-          <Link className={s.link} to="/user">
-            用户中心
-          </Link>
         </nav>
-        {renderRoutes(this.props.route.children)}
+        <div className={s.container}>{renderRoutes(this.props.route.children)}</div>
       </div>
     )
   }

@@ -1,12 +1,22 @@
-/**
- * Time: 2021/6/23.
- * Author: Yang PengFei
- */
 import axios from 'axios'
-axios.defaults.timeout = 120000 // 两分钟
-axios.defaults.headers.common['Content-Type'] = 'application/json'
+import { baseUrl } from '@/common/config'
+
+/**
+ * 全局请求工具
+ */
+// 统一配置请求
+const http = axios.create({
+  baseURL: baseUrl,
+  responseType: 'json',
+  timeout: 30000,
+  validateStatus(status) {
+    // 200 外的状态码都认定为失败
+    return status === 200
+  },
+})
+
 // 请求拦截器
-axios.interceptors.request.use(
+http.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -18,8 +28,9 @@ axios.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
 // 响应拦截器
-axios.interceptors.response.use(
+http.interceptors.response.use(
   (response) => {
     return response.data
   },
@@ -28,66 +39,44 @@ axios.interceptors.response.use(
   }
 )
 
-const getRequest = (url, params = {}, headers = {}) => {
+const request = (axios) => {
   return new Promise((resolve, reject) => {
-    axios({
-      url: url,
-      method: 'GET',
-      params,
-      headers,
-    })
+    axios
       .then((res) => {
-        resolve(res)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  }).catch((error) => {
-    console.log(error)
-  })
-}
-const postRequest = (url, params = {}, headers = {}) => {
-  return new Promise((resolve, reject) => {
-    axios({
-      url: url,
-      method: 'POST',
-      params,
-      headers,
-    })
-      .then((res) => {
-        resolve(res)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  }).catch((error) => {
-    console.log(error)
-  })
-}
-const fileRequest = (url, data = {}, headers = {}) => {
-  axios.defaults.headers.common['Content-Type'] = 'multipart/form-data'
-  return new Promise((resolve, reject) => {
-    const options = {
-      method: 'POST',
-      headers: { 'content-type': 'multipart/form-data' },
-      data,
-      url,
-    }
-    axios(options).then(
-      (response) => {
-        if (response) {
-          resolve(response.data)
+        if (res.status >= 200 && res.status < 300) {
+          resolve(res.data)
         } else {
-          reject(response)
+          reject(res)
         }
-      },
-      (err) => {
-        reject(err)
-      }
-    )
+      })
+      .catch((error) => {
+        reject(error)
+      })
+      .finally(() => {
+        // Toast.clear();
+      })
   }).catch((error) => {
-    console.log(error)
+    console.log('Request Error:', error)
   })
 }
 
-export { getRequest, postRequest, fileRequest }
+const get = (url, params) => {
+  return request(http.get(url, { params }))
+}
+const post = (url, data) => {
+  return request(http.post(url, data, { headers: { 'Content-Type': 'application/json' } }))
+}
+
+const put = (url, data) => {
+  return request(http.put(url, data, { headers: { 'Content-Type': 'application/json' } }))
+}
+
+const del = (url, params) => {
+  return request(http.delete(url, { params }))
+}
+
+const upload = (url, data) => {
+  return request(http.post(url, data, { headers: { 'content-type': 'multipart/form-data' } }))
+}
+
+export { get, post, put, del, upload }

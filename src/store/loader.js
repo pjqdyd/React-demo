@@ -1,6 +1,5 @@
 /**
- * Time: 2021/6/22.
- * Author: Yang PengFei
+ * 模块化自动导入
  */
 const files = require.context('./models', false, /\.js$/)
 const models = {}

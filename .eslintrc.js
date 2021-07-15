@@ -19,6 +19,7 @@ module.exports = {
     'react',
     'prettier', // eslint 会使用prettier的规则对代码格式化
   ],
+  parser: 'babel-eslint',
   rules: {
     'prettier/prettier': 2, // 这项配置 对于不符合prettier规范的写法，eslint会提示报错
     'react/prop-types': 0, //防止在react组件定义中缺少props验证
