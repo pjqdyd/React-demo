@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { baseUrl } from '@/common/config'
+const config = require('@/common/config')
 
 /**
  * 全局请求工具
  */
 // 统一配置请求
 const http = axios.create({
-  baseURL: baseUrl,
+  baseURL: config.baseUrl,
   responseType: 'json',
   timeout: 30000,
   validateStatus(status) {
@@ -43,11 +43,8 @@ const request = (axios) => {
   return new Promise((resolve, reject) => {
     axios
       .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          resolve(res.data)
-        } else {
-          reject(res)
-        }
+        //校验内部状态码
+        resolve(res.data)
       })
       .catch((error) => {
         reject(error)
@@ -79,4 +76,4 @@ const upload = (url, data) => {
   return request(http.post(url, data, { headers: { 'content-type': 'multipart/form-data' } }))
 }
 
-export { get, post, put, del, upload }
+export default { get, post, put, del, upload }
