@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
+import store from '@/store'
 
 const authPath = '/login' // 未登录跳转路径
 
@@ -12,6 +13,7 @@ const authPath = '/login' // 未登录跳转路径
  */
 const renderRoutes = (routes = [], extraProps = {}, switchProps = {}) => {
   const isLogin = true // 是否登录，从redux中获取登录状态
+  console.log(store.getState().user)
 
   return (
     <Switch {...switchProps}>
